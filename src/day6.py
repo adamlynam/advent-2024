@@ -88,16 +88,15 @@ def move_left_spaces(x: int, y: int, lines: list[str]) -> list[(int, int)]:
 
 def part2(lines: list[str]) -> int:
     startx, starty = find_start(lines)
+    moved_spaces = list(set(move_up_spaces(startx, starty, lines)))
     loops = 0
-    for y in range(len(lines)):
-        for x in range(len(lines[0])):
-            if lines[y][x] == ".":
-                extra_obstacle_lines = lines[:]
-                extra_obstacle_lines[y] = (
-                    extra_obstacle_lines[y][:x] + "#" + extra_obstacle_lines[y][x + 1 :]
-                )
-                if move_up_loop(startx, starty, extra_obstacle_lines, []):
-                    loops = loops + 1
+    for x, y in moved_spaces:
+        extra_obstacle_lines = lines[:]
+        extra_obstacle_lines[y] = (
+            extra_obstacle_lines[y][:x] + "#" + extra_obstacle_lines[y][x + 1 :]
+        )
+        if move_up_loop(startx, starty, extra_obstacle_lines, []):
+            loops = loops + 1
     return loops
 
 
