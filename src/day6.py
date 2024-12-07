@@ -127,8 +127,9 @@ def move_up_loop(
 def move_right_loop(
     x: int, y: int, lines: list[str], positions_seen: list[(str, int, int)]
 ) -> bool:
-    print("right turn at:")
-    print(x, y)
+    if ("right", x, y) in positions_seen:
+        return True
+    positions_seen.append(("right", x, y))
 
     while x < len(lines[0]):
         if x + 1 >= len(lines[0]):
@@ -147,6 +148,10 @@ def move_right_loop(
 def move_down_loop(
     x: int, y: int, lines: list[str], positions_seen: list[(str, int, int)]
 ) -> bool:
+    if ("down", x, y) in positions_seen:
+        return True
+    positions_seen.append(("down", x, y))
+
     while y < len(lines):
         if y + 1 >= len(lines):
             return False
@@ -162,6 +167,10 @@ def move_down_loop(
 def move_left_loop(
     x: int, y: int, lines: list[str], positions_seen: list[(str, int, int)]
 ) -> bool:
+    if ("left", x, y) in positions_seen:
+        return True
+    positions_seen.append(("left", x, y))
+
     while x >= 0:
         if x - 1 < 0:
             return False
