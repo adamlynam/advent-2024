@@ -74,17 +74,14 @@ def optimise_disk_full_files(disk: list[(str, int, int)]) -> list[str]:
         file_length = file[1]
         file_index = file[2]
         # print(file_index)
-        earlier_spaces = list(
-            filter(
-                lambda descriptor: descriptor[0] == "space"
+        try:
+            fill_space = next(
+                descriptor
+                for descriptor in optimised_disk
+                if descriptor[0] == "space"
                 and descriptor[2] <= file_index
-                and descriptor[1] >= file_length,
-                optimised_disk,
+                and descriptor[1] >= file_length
             )
-        )
-        # print(earlier_spaces)
-        if len(earlier_spaces) > 0:
-            fill_space = earlier_spaces[0]
             new_disk = []
             for descriptor in optimised_disk:
                 if descriptor == fill_space:
@@ -100,7 +97,8 @@ def optimise_disk_full_files(disk: list[(str, int, int)]) -> list[str]:
                     new_disk.append(descriptor)
             # print(new_disk)
             optimised_disk = new_disk
-
+        except StopIteration:
+            continue
     return optimised_disk
 
 
