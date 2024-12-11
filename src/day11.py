@@ -11,12 +11,10 @@ def parse_stones(line: str) -> list[int]:
     return list(map(lambda stone: int(stone), line.split(" ")))
 
 
-def blink(stones: list[int], blink_times: int) -> list[int]:
-    stone_count = 0
-    for stone in stones:
-        stone_count = stone_count + blink_stone(stone, blink_times)
-
-    return stone_count
+def blink(stones: list[int], blink_times: int) -> int:
+    return functools.reduce(
+        lambda current, next: current + blink_stone(next, blink_times), stones, 0
+    )
 
 
 @functools.cache
