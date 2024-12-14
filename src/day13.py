@@ -31,6 +31,16 @@ def cost_games(games: list[((int, int), (int, int), (int, int))]) -> int:
     return functools.reduce(lambda cost, game: cost_game(game) + cost, games, 0)
 
 
+# prize_x = button_a_x * a_presses + button_b_x * b_presses
+# prize_y = button_a_y * a_presses + button_b_y * b_presses
+
+# a_presses = (prize_x - button_b_x * b_presses) / button_a_x
+# a_presses = (prize_y - button_b_y * b_presses) / button_a_y
+
+
+# (prize_y - button_b_y * b_presses) / button_a_y = (prize_x - button_b_x * b_presses) / button_a_x
+# (prize_y - button_b_y * b_presses) = ((prize_x - button_b_x * b_presses) / button_a_x) * button_a_y
+# b_presses = (prize_x * button_a_y - prize_y * button_a_x) / (-button_b_y * button_a_x + button_b_x * button_a_y)
 def cost_game(game: ((int, int), (int, int), (int, int))) -> int:
     button_a_x = game[0][0]
     button_a_y = game[0][1]
@@ -39,21 +49,15 @@ def cost_game(game: ((int, int), (int, int), (int, int))) -> int:
     prize_x = game[2][0]
     prize_y = game[2][1]
 
-    a_presses = 0
-    b_presses = math.floor(prize_x / button_b_x)
-    best_price = None
-    while b_presses >= 0:
-        # print(b_presses)
-        while a_presses * button_a_x + b_presses * button_b_x < prize_x:
-            a_presses = a_presses + 1
-        if (
-            a_presses * button_a_x + b_presses * button_b_x == prize_x
-            and a_presses * button_a_y + b_presses * button_b_y == prize_y
-        ):
-            best_price = a_presses * 3 + b_presses
-        b_presses = b_presses - 1
+    b_presses = (prize_x * button_a_y - prize_y * button_a_x) / (
+        -button_b_y * button_a_x + button_b_x * button_a_y
+    )
+    a_presses = (prize_x - b_presses * button_b_x) / button_a_x
 
-    return 0 if best_price is None else best_price
+    if not b_presses.is_integer() or not a_presses.is_integer():
+        return 0
+
+    return int(a_presses * 3 + b_presses)
 
 
 def part2(lines: list[str]) -> int:
