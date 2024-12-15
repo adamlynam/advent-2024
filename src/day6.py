@@ -109,15 +109,15 @@ def move_up_loop(
 
     while y >= 0:
         if y - 1 < 0:
-            print("off map up")
-            print(x, y)
+            # print("off map up")
+            # print(x, y)
             return False
         elif lines[y - 1][x] == "#":
-            print("turn right")
+            # print("turn right")
             return move_right_loop(x, y, lines, positions_seen)
         else:
-            print("current location:")
-            print(x, y)
+            # print("current location:")
+            # print(x, y)
             y = y - 1
 
     return False
@@ -132,11 +132,11 @@ def move_right_loop(
 
     while x < len(lines[0]):
         if x + 1 >= len(lines[0]):
-            print("off map right")
-            print(x, y)
+            # print("off map right")
+            # print(x, y)
             return False
         elif lines[y][x + 1] == "#":
-            print("turn down")
+            # print("turn down")
             return move_down_loop(x, y, lines, positions_seen)
         else:
             x = x + 1
@@ -155,7 +155,7 @@ def move_down_loop(
         if y + 1 >= len(lines):
             return False
         elif lines[y + 1][x] == "#":
-            print("turn left")
+            # print("turn left")
             return move_left_loop(x, y, lines, positions_seen)
         else:
             y = y + 1
@@ -174,7 +174,7 @@ def move_left_loop(
         if x - 1 < 0:
             return False
         elif lines[y][x - 1] == "#":
-            print("turn up")
+            # print("turn up")
             return move_up_loop(x, y, lines, positions_seen)
         else:
             x = x - 1
