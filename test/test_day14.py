@@ -36,4 +36,4 @@ def test_part2_example_5_steps():
 def test_part2_real_input():
     f = open("input/day14.txt", "r")
     lines = list(map(lambda line: line.replace("\n", ""), f.readlines()))
-    assert part2(lines, 101, 103, 1000) == 6243
+    assert part2(lines, 101, 103, 1) == 6243
